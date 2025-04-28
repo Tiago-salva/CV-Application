@@ -1,6 +1,9 @@
 import { useState } from "react";
 import CustomInput from "./components/customInput";
 import CustomForm from "./components/CustomForm";
+import Header from "./components/Header";
+import Section from "./components/Section";
+import "./styles/App.css";
 
 const personalInputs = [
   {
@@ -24,11 +27,14 @@ const personalInputs = [
   {
     label: "Address",
     placeHolder: "City or Country",
-    id: "Address",
+    id: "address",
     type: "text",
   },
 ];
 const educationInputs = [
+  {
+    title: "Education",
+  },
   {
     label: "School",
     placeHolder: "Enter school or university",
@@ -55,6 +61,9 @@ const educationInputs = [
   },
 ];
 const experienceInputs = [
+  {
+    title: "Profesional experience",
+  },
   {
     label: "Company name",
     placeHolder: "Enter company name",
@@ -88,16 +97,46 @@ const experienceInputs = [
 ];
 
 export default function App() {
+  const [personalData, setPersonalData] = useState({});
+  const [educationData, setEducationData] = useState({});
+  const [experienceData, setExperienceData] = useState({});
+
   return (
     <>
-      <h2>Personal details</h2>
-      <CustomForm inputs={personalInputs}></CustomForm>
+      <div className="form-container">
+        <div className="personal-details">
+          <CustomForm
+            title={"Personal details"}
+            inputs={personalInputs}
+            formData={personalData}
+            setFormData={setPersonalData}
+          ></CustomForm>
+        </div>
 
-      <h2>Education</h2>
-      <CustomForm inputs={educationInputs}></CustomForm>
+        <div className="education-form">
+          <CustomForm
+            title={"Education"}
+            inputs={educationInputs}
+            formData={educationData}
+            setFormData={setEducationData}
+          ></CustomForm>
+        </div>
 
-      <h2>Experience</h2>
-      <CustomForm inputs={experienceInputs}></CustomForm>
+        <div className="experience-form">
+          <CustomForm
+            title={"Experience"}
+            inputs={experienceInputs}
+            formData={experienceData}
+            setFormData={setExperienceData}
+          ></CustomForm>
+        </div>
+      </div>
+
+      <div className="cv-container">
+        <Header data={personalData}></Header>
+        <Section data={educationData}></Section>
+        <Section data={experienceData}></Section>
+      </div>
     </>
   );
 }
