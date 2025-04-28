@@ -1,17 +1,21 @@
 import { useState } from "react";
 
-export default function CustomInput({ type, placeHolder, id }) {
-  const [value, setValue] = useState("");
-
+export default function CustomInput({
+  type,
+  placeHolder,
+  id,
+  name,
+  value,
+  onChange,
+}) {
   return (
     <input
       type={type}
       placeholder={placeHolder}
       id={id}
+      name={name}
       value={value}
-      onChange={(event) => {
-        setValue(event.target.value);
-      }}
+      onChange={onChange}
     ></input>
   );
 }
