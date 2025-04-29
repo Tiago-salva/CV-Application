@@ -1,29 +1,105 @@
-#root {
-    display: flex;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
     background-color: rgb(166, 166, 243);
-    justify-content: space-between;
     padding: 0 10px;
 }
 
-header {
-    background-color: aliceblue;
+#root {
+    display: flex;
+    gap: 20px;
+}
+
+.form-container {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 30px 10px;
+}
+
+.personal-details,
+.education-form,
+.experience-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.section-toggleBtn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.formClosed {
+    display: none;
+}
+
+.personal-details > .formOpen,
+.education-form > .formOpen,
+.experience-form > .formOpen {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .cv-container {
-    width: 50%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: coral;
+    gap: 50px;
 }
 
-.cv-container > header {
+.resume-header {
+    background-color: aliceblue;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px 0;
+    gap: 20px;
 }
 
 .contact-info-container {
     display: flex;
     gap: 50px;
+}
+
+.resume-section {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.section-title {
+    width: 100%;
+    background-color: beige;
+    text-align: center;
+}
+
+.section-info-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 30px;
+}
+
+.section-info-group:nth-child(1) {
+    min-width: 100px;
 }
