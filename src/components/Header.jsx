@@ -1,18 +1,18 @@
 export default function Header({ data }) {
   return (
-    <header>
+    <header className="resume-header">
       <h1>{data["full-name"]}</h1>
       <div className="contact-info-container">
         <div className="email">
-          {/* <img></img> */}
+          {/* icono */}
           <p>{data["email"]} </p>
         </div>
         <div className="phone">
-          {/* <img></img> */}
+          {/* icono */}
           <p>{data["phone"]} </p>
         </div>
         <div className="address">
-          {/* <img></img> */}
+          {/* icono */}
           <p>{data["address"]} </p>
         </div>
       </div>
