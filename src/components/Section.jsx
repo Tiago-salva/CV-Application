@@ -1,12 +1,24 @@
-export default function Section({ data }) {
+export default function Section({ data, title }) {
   return (
-    <section>
-      {Object.entries(data).map(([key, value]) => (
-        <div key={key}>
-          <h3>{key}</h3>
-          <p key={key}>{value}</p>
+    <section className="resume-section">
+      <h3 className="section-title">{title}</h3>
+      <div className="section-info-container">
+        <div className="section-info-group">
+          <p>
+            {data["startDateLabel"]}
+            {(data["startDateLabel"] || data["endDateLabel"]) && " - "}
+            {data["endDateLabel"]}
+          </p>
+          <p>{data["locationLabel"]}</p>
         </div>
-      ))}
+        <div className="section-info-group">
+          <p>
+            <strong>{data["institutionLabel"]}</strong>
+          </p>
+          <p>{data["positionLabel"]} </p>
+          {data["descriptionLabel"] && <p>{data["descriptionLabel"]}</p>}
+        </div>
+      </div>
     </section>
   );
 }
