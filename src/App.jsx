@@ -11,88 +11,109 @@ const personalInputs = [
     placeHolder: "First and last name",
     id: "full-name",
     type: "text",
+    name: "full-name",
   },
   {
     label: "Email",
     placeHolder: "Enter email",
     id: "email",
     type: "email",
+    name: "email",
   },
   {
     label: "Phone number",
     placeHolder: "Enter phone number",
     id: "phone",
     type: "tel",
+    name: "phone",
   },
   {
     label: "Address",
     placeHolder: "City or Country",
     id: "address",
     type: "text",
+    name: "address",
   },
 ];
 const educationInputs = [
-  {
-    title: "Education",
-  },
   {
     label: "School",
     placeHolder: "Enter school or university",
     id: "school",
     type: "text",
+    name: "institutionLabel",
   },
   {
     label: "Degree",
     placeHolder: "Enter degree or Field of study",
     id: "degree",
     type: "text",
+    name: "positionLabel",
   },
   {
     label: "Start date",
     placeHolder: "Enter start date",
     id: "education-start-date",
-    type: "date",
+    type: "text",
+    name: "startDateLabel",
   },
   {
     label: "End date",
     placeHolder: "Enter end date",
     id: "education-end-date",
-    type: "date",
+    type: "text",
+    name: "endDateLabel",
+  },
+  {
+    label: "Location",
+    placeHolder: "Enter location",
+    id: "education-location",
+    type: "text",
+    name: "locationLabel",
   },
 ];
 const experienceInputs = [
-  {
-    title: "Profesional experience",
-  },
   {
     label: "Company name",
     placeHolder: "Enter company name",
     id: "company",
     type: "text",
+    name: "institutionLabel",
   },
   {
     label: "Position title",
     placeHolder: "Enter position title",
     id: "position",
     type: "text",
+    name: "positionLabel",
   },
   {
     label: "Start date",
     placeHolder: "Enter start date",
     id: "experience-start-date",
-    type: "date",
+    type: "text",
+    name: "startDateLabel",
   },
   {
     label: "End date",
     placeHolder: "Enter end date",
     id: "experience-end-date",
-    type: "date",
+    type: "text",
+    name: "endDateLabel",
   },
   {
     label: "Description",
     placeHolder: "Enter description",
     id: "description",
     type: "text",
+    name: "descriptionLabel",
+  },
+  {
+    label: "Location",
+    placeHolder: "Enter location",
+    id: "education-location",
+    type: "text",
+    name: "locationLabel",
   },
 ];
 
@@ -134,8 +155,11 @@ export default function App() {
 
       <div className="cv-container">
         <Header data={personalData}></Header>
-        <Section data={educationData}></Section>
-        <Section data={experienceData}></Section>
+        <Section data={educationData} title={"Education"}></Section>
+        <Section
+          data={experienceData}
+          title={"Profesional experience"}
+        ></Section>
       </div>
     </>
   );
