@@ -1,6 +1,8 @@
+import { useState } from "react";
 import CustomInput from "./customInput";
 
 export default function CustomForm({ title, inputs, formData, setFormData }) {
+  const [isOpen, setIsOpen] = useState(false);
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prev) => ({
@@ -11,8 +13,20 @@ export default function CustomForm({ title, inputs, formData, setFormData }) {
 
   return (
     <>
+      {title !== "Personal details" && (
+        <button
+          className="section-toggleBtn"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? "Cerrar" : "Abrir"}
+        </button>
+      )}
       <h2>{title}</h2>
-      <form>
+      <form
+        className={
+          title === "Personal details" || isOpen ? "formOpen" : "formClosed"
+        }
+      >
         {inputs.map((input) => (
           <div className="input-container" key={input.id}>
             <label htmlFor={input.id}>
@@ -22,14 +36,17 @@ export default function CustomForm({ title, inputs, formData, setFormData }) {
               <textarea
                 placeholder={input.placeHolder}
                 id={input.id}
+                name={input.name}
+                value={formData[input.name] || ""}
+                onChange={handleChange}
               ></textarea>
             ) : (
               <CustomInput
                 type={input.type}
                 placeholder={input.placeHolder}
                 id={input.id}
-                name={input.id}
-                value={formData[input.id] || ""}
+                name={input.name}
+                value={formData[input.name] || ""}
                 onChange={handleChange}
               ></CustomInput>
             )}
