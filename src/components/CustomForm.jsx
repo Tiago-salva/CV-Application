@@ -1,7 +1,13 @@
 import { useState } from "react";
 import CustomInput from "./customInput";
 
-export default function CustomForm({ title, inputs, formData, setFormData }) {
+export default function CustomForm({
+  title,
+  inputs,
+  formData,
+  setFormData,
+  setSection,
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -9,6 +15,12 @@ export default function CustomForm({ title, inputs, formData, setFormData }) {
       ...prev,
       [name]: value,
     }));
+  };
+
+  const saveSection = (e, setSection) => {
+    e.preventDefault();
+    setSection((prev) => [...prev, formData]);
+    setFormData({});
   };
 
   return (
@@ -52,6 +64,11 @@ export default function CustomForm({ title, inputs, formData, setFormData }) {
             )}
           </div>
         ))}
+        {title !== "Personal details" && (
+          <button type="submit" onClick={(e) => saveSection(e, setSection)}>
+            Enviar
+          </button>
+        )}
       </form>
     </>
   );
