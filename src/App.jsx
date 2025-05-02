@@ -1,5 +1,4 @@
 import { useState } from "react";
-import CustomInput from "./components/customInput";
 import CustomForm from "./components/CustomForm";
 import Header from "./components/Header";
 import Section from "./components/Section";
@@ -118,6 +117,9 @@ const experienceInputs = [
 ];
 
 export default function App() {
+  const [educationSections, setEducationSections] = useState([]);
+  const [experienceSections, setExperienceSections] = useState([]);
+
   const [personalData, setPersonalData] = useState({});
   const [educationData, setEducationData] = useState({});
   const [experienceData, setExperienceData] = useState({});
@@ -140,6 +142,7 @@ export default function App() {
             inputs={educationInputs}
             formData={educationData}
             setFormData={setEducationData}
+            setSection={setEducationSections}
           ></CustomForm>
         </div>
 
@@ -149,15 +152,27 @@ export default function App() {
             inputs={experienceInputs}
             formData={experienceData}
             setFormData={setExperienceData}
+            setSection={setExperienceSections}
           ></CustomForm>
         </div>
       </div>
 
       <div className="cv-container">
         <Header data={personalData}></Header>
-        <Section data={educationData} title={"Education"}></Section>
         <Section
-          data={experienceData}
+          data={
+            Object.keys(educationData).length > 0
+              ? [...educationSections, educationData]
+              : educationSections
+          }
+          title={"Education"}
+        ></Section>
+        <Section
+          data={
+            Object.keys(experienceData).length > 0
+              ? [...experienceSections, experienceData]
+              : experienceSections
+          }
           title={"Profesional experience"}
         ></Section>
       </div>
