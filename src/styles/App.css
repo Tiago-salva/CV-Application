@@ -22,7 +22,7 @@ body {
     padding: 30px 10px;
 }
 
-.personal-details,
+.personal-form,
 .education-form,
 .experience-form {
     position: relative;
@@ -37,11 +37,19 @@ body {
     right: 5px;
 }
 
-.formClosed {
+.form-closed {
     display: none;
 }
 
-.personal-details > .formOpen,
+.sections-created-container-open {
+    display: block;
+}
+
+.sections-created-container-closed {
+    display: none;
+}
+
+.personal-form > .formOpen,
 .education-form > .formOpen,
 .experience-form > .formOpen {
     display: flex;
