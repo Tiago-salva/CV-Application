@@ -16,6 +16,7 @@ export default function CustomInput({
       name={name}
       value={value}
       onChange={onChange}
+      required
     ></input>
   );
 }
