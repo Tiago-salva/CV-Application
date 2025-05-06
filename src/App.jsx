@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import CustomForm from "./components/CustomForm";
 import Header from "./components/Header";
 import Section from "./components/Section";
@@ -124,37 +124,102 @@ export default function App() {
   const [educationData, setEducationData] = useState({});
   const [experienceData, setExperienceData] = useState({});
 
+  const [formOpenIndex, setFormOpenIndex] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+
+  const forms = [
+    {
+      key: "education",
+      title: "Education",
+      inputs: educationInputs,
+      formData: educationData,
+      setFormData: setEducationData,
+      setSection: setEducationSections,
+      sections: educationSections,
+    },
+    {
+      key: "experience",
+      title: "Experience",
+      inputs: experienceInputs,
+      formData: experienceData,
+      setFormData: setExperienceData,
+      setSection: setExperienceSections,
+      sections: experienceSections,
+    },
+  ];
+
+  const onToggle = (index) => {
+    setFormOpenIndex((prevIndex) => (prevIndex === index ? null : index));
+  };
+
   return (
     <>
       <div className="form-container">
-        <div className="personal-details">
+        {/* Form que siempre queda abierto */}
+        <div className="personal-form">
+          <h2>Personal details</h2>
           <CustomForm
-            title={"Personal details"}
+            title="Personal details"
             inputs={personalInputs}
             formData={personalData}
             setFormData={setPersonalData}
           ></CustomForm>
         </div>
 
-        <div className="education-form">
-          <CustomForm
-            title={"Education"}
-            inputs={educationInputs}
-            formData={educationData}
-            setFormData={setEducationData}
-            setSection={setEducationSections}
-          ></CustomForm>
-        </div>
+        {forms.map((form, index) => (
+          <div key={form.key} className={`${form.key}-form`}>
+            <h2>{form.title}</h2>
 
-        <div className="experience-form">
-          <CustomForm
-            title={"Experience"}
-            inputs={experienceInputs}
-            formData={experienceData}
-            setFormData={setExperienceData}
-            setSection={setExperienceSections}
-          ></CustomForm>
-        </div>
+            {/* Btn para abrir y cerrar el form */}
+            <button
+              className="section-toggleBtn"
+              onClick={() => onToggle(index)}
+            >
+              {formOpenIndex === index ? "Cerrar" : "Abrir"}
+            </button>
+            {/* Btn para abrir y cerrar el form */}
+
+            {!showForm ? (
+              <>
+                {/* Muestra todas las secciones creadas */}
+                <div
+                  className={`sections-created-container-${
+                    formOpenIndex === index ? "open" : "closed"
+                  }`}
+                >
+                  {/* Sirve para mostrar todas las secciones creadas */}
+                  {form.sections.map((section) => (
+                    <p key={index}>{section.institutionLabel}</p>
+                  ))}
+
+                  {/* Btn para añadir nueva seccion, muestra el formulario */}
+                  <button onClick={() => setShowForm(true)}>Add</button>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* Muestra los formularios */}
+                <div
+                  className={
+                    form.key === "personal"
+                      ? "form-open"
+                      : `form-${formOpenIndex === index ? "open" : "closed"}`
+                  }
+                >
+                  <CustomForm
+                    title={form.title}
+                    inputs={form.inputs}
+                    formData={form.formData}
+                    setFormData={form.setFormData}
+                    setSection={form.setSection}
+                    setShowForm={setShowForm}
+                  ></CustomForm>
+                </div>
+                {/* Muestra los formularios */}
+              </>
+            )}
+          </div>
+        ))}
       </div>
 
       <div className="cv-container">
