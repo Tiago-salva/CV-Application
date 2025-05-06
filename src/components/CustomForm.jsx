@@ -7,8 +7,8 @@ export default function CustomForm({
   formData,
   setFormData,
   setSection,
+  setShowForm,
 }) {
-  const [isOpen, setIsOpen] = useState(false);
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prev) => ({
@@ -21,24 +21,12 @@ export default function CustomForm({
     e.preventDefault();
     setSection((prev) => [...prev, formData]);
     setFormData({});
+    setShowForm(false);
   };
 
   return (
     <>
-      {title !== "Personal details" && (
-        <button
-          className="section-toggleBtn"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? "Cerrar" : "Abrir"}
-        </button>
-      )}
-      <h2>{title}</h2>
-      <form
-        className={
-          title === "Personal details" || isOpen ? "formOpen" : "formClosed"
-        }
-      >
+      <form>
         {inputs.map((input) => (
           <div className="input-container" key={input.id}>
             <label htmlFor={input.id}>
@@ -51,6 +39,7 @@ export default function CustomForm({
                 name={input.name}
                 value={formData[input.name] || ""}
                 onChange={handleChange}
+                required
               ></textarea>
             ) : (
               <CustomInput
