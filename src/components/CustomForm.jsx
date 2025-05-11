@@ -24,6 +24,11 @@ export default function CustomForm({
     setShowForm(false);
   };
 
+  const cancelForm = () => {
+    setShowForm(false);
+    setFormData({});
+  };
+
   return (
     <>
       <form>
@@ -54,9 +59,12 @@ export default function CustomForm({
           </div>
         ))}
         {title !== "Personal details" && (
-          <button type="submit" onClick={(e) => saveSection(e, setSection)}>
-            Enviar
-          </button>
+          <>
+            <button onClick={() => cancelForm()}>Cancel</button>
+            <button type="submit" onClick={(e) => saveSection(e, setSection)}>
+              Enviar
+            </button>
+          </>
         )}
       </form>
     </>
