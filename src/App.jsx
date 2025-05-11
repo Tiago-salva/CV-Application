@@ -152,6 +152,12 @@ export default function App() {
     setFormOpenIndex((prevIndex) => (prevIndex === index ? null : index));
   };
 
+  const removeSection = (setSection, index) => {
+    setSection((prevSections) =>
+      prevSections.filter((section, sectionIndex) => sectionIndex !== index)
+    );
+  };
+
   return (
     <>
       <div className="form-container">
@@ -188,8 +194,19 @@ export default function App() {
                   }`}
                 >
                   {/* Sirve para mostrar todas las secciones creadas */}
-                  {form.sections.map((section) => (
-                    <p key={index}>{section.institutionLabel}</p>
+                  {form.sections.map((section, sectionIndex) => (
+                    <div className="section-created">
+                      <p key={sectionIndex}>{section.institutionLabel}</p>
+                      <button>Editar</button>
+                      <button
+                        className="section-created-remove-btn"
+                        onClick={() => {
+                          removeSection(form.setSection, sectionIndex);
+                        }}
+                      >
+                        Remove
+                      </button>
+                    </div>
                   ))}
 
                   {/* Btn para añadir nueva seccion, muestra el formulario */}
