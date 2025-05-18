@@ -8,6 +8,8 @@ export default function CustomForm({
   setFormData,
   setSection,
   setShowForm,
+  editingIndex,
+  setEditingIndex,
 }) {
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -17,9 +19,13 @@ export default function CustomForm({
     }));
   };
 
-  const saveSection = (e, setSection) => {
+  const handleSubmit = (e, setSection) => {
     e.preventDefault();
-    setSection((prev) => [...prev, formData]);
+    editingIndex !== null
+      ? setSection((prev) =>
+          prev.map((section, i) => (i === editingIndex ? formData : section))
+        )
+      : setSection((prev) => [...prev, formData]);
     setFormData({});
     setShowForm(false);
   };
@@ -27,6 +33,7 @@ export default function CustomForm({
   const cancelForm = () => {
     setShowForm(false);
     setFormData({});
+    setEditingIndex(null);
   };
 
   return (
@@ -35,7 +42,7 @@ export default function CustomForm({
         {inputs.map((input) => (
           <div className="input-container" key={input.id}>
             <label htmlFor={input.id}>
-              <span>{input.label}</span>{" "}
+              <span>{input.label}</span>
             </label>
             {input.id === "description" ? (
               <textarea
@@ -59,12 +66,18 @@ export default function CustomForm({
           </div>
         ))}
         {title !== "Personal details" && (
-          <>
-            <button onClick={() => cancelForm()}>Cancel</button>
-            <button type="submit" onClick={(e) => saveSection(e, setSection)}>
+          <div className="buttons-container">
+            <button className="cancel-btn" onClick={() => cancelForm()}>
+              Cancel
+            </button>
+            <button
+              className="submit-btn"
+              type="submit"
+              onClick={(e) => handleSubmit(e, setSection)}
+            >
               Enviar
             </button>
-          </>
+          </div>
         )}
       </form>
     </>
