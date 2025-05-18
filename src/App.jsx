@@ -3,6 +3,8 @@ import CustomForm from "./components/CustomForm";
 import Header from "./components/Header";
 import Section from "./components/Section";
 import "./styles/App.css";
+import { ChevronDown } from "lucide-react";
+import { ChevronUp } from "lucide-react";
 
 const personalInputs = [
   {
@@ -127,6 +129,8 @@ export default function App() {
   const [formOpenIndex, setFormOpenIndex] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
+  const [editingIndex, setEditingIndex] = useState(null);
+
   const forms = [
     {
       key: "education",
@@ -158,6 +162,12 @@ export default function App() {
     );
   };
 
+  const editSection = (sections, sectionIndex, setFormData) => {
+    setFormData(sections[sectionIndex]);
+    setEditingIndex(sectionIndex);
+    setShowForm(true);
+  };
+
   return (
     <>
       <div className="form-container">
@@ -174,48 +184,58 @@ export default function App() {
 
         {forms.map((form, index) => (
           <div key={form.key} className={`${form.key}-form`}>
-            <h2>{form.title}</h2>
-
-            {/* Btn para abrir y cerrar el form */}
             <button
-              className="section-toggleBtn"
+              className={`section-toggleBtn-${
+                formOpenIndex === index ? "open" : "closed"
+              }`}
               onClick={() => onToggle(index)}
             >
-              {formOpenIndex === index ? "Cerrar" : "Abrir"}
+              <h2>{form.title}</h2>
+              <div
+                className={`chevron-container-${
+                  formOpenIndex === index ? "down" : "up"
+                }`}
+              >
+                <ChevronDown />
+              </div>
             </button>
-            {/* Btn para abrir y cerrar el form */}
-
             {!showForm ? (
               <>
-                {/* Muestra todas las secciones creadas */}
                 <div
                   className={`sections-created-container-${
                     formOpenIndex === index ? "open" : "closed"
                   }`}
                 >
-                  {/* Sirve para mostrar todas las secciones creadas */}
                   {form.sections.map((section, sectionIndex) => (
-                    <div className="section-created">
-                      <p key={sectionIndex}>{section.institutionLabel}</p>
-                      <button>Editar</button>
+                    <div key={sectionIndex} className="section-created">
+                      <p>{section.institutionLabel}</p>
+                      <button
+                        onClick={() =>
+                          editSection(
+                            form.sections,
+                            sectionIndex,
+                            form.setFormData
+                          )
+                        }
+                      >
+                        Edit
+                      </button>
                       <button
                         className="section-created-remove-btn"
                         onClick={() => {
                           removeSection(form.setSection, sectionIndex);
                         }}
                       >
-                        Remove
+                        Delete
                       </button>
                     </div>
                   ))}
 
-                  {/* Btn para añadir nueva seccion, muestra el formulario */}
                   <button onClick={() => setShowForm(true)}>Add</button>
                 </div>
               </>
             ) : (
               <>
-                {/* Muestra los formularios */}
                 <div
                   className={
                     form.key === "personal"
@@ -230,9 +250,10 @@ export default function App() {
                     setFormData={form.setFormData}
                     setSection={form.setSection}
                     setShowForm={setShowForm}
+                    editingIndex={editingIndex}
+                    setEditingIndex={setEditingIndex}
                   ></CustomForm>
                 </div>
-                {/* Muestra los formularios */}
               </>
             )}
           </div>
@@ -243,7 +264,9 @@ export default function App() {
         <Header data={personalData}></Header>
         <Section
           data={
-            Object.keys(educationData).length > 0
+            editingIndex !== null
+              ? educationSections
+              : Object.keys(educationData).length > 0
               ? [...educationSections, educationData]
               : educationSections
           }
@@ -251,7 +274,9 @@ export default function App() {
         ></Section>
         <Section
           data={
-            Object.keys(experienceData).length > 0
+            editingIndex !== null
+              ? experienceSections
+              : Object.keys(experienceData).length > 0
               ? [...experienceSections, experienceData]
               : experienceSections
           }
